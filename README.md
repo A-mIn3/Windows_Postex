@@ -1,7 +1,7 @@
 ## MeterDLL
  DLL wrapping of meterpreter.
  Can be further improved to include dummy functions depending on the DLL one wants to spoof.
- It can also be changed to support Windows hosted services.
+ It can also be changed to support Windows hosted services hijacking.
  
  
  ##  MSRPC-brute

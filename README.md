@@ -6,5 +6,5 @@
  
  ##  MSRPC-brute
   Automation of [winexe](https://sourceforge.net/projects/winexe/) for bruteforcing access to Windows RPC (IPC$ share).</br> 
- Note that even if you have the correct admin credentials you might still not have access due to [UAC remote restrictions](https://support.microsoft.com/en-us/help/951016/description-of-user-account-control-and-remote-restrictions-in-windows).
+ Please note that even if you have the correct admin credentials you might still not have access due to [UAC remote restrictions](https://support.microsoft.com/en-us/help/951016/description-of-user-account-control-and-remote-restrictions-in-windows).
  

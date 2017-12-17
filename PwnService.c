@@ -14,8 +14,8 @@ HANDLE Stop_Event;
 int main(int argc, char **argv)
 {
 	SERVICE_TABLE_ENTRYA DispatchTable[] = { 
-											   {SERVICE_NAME     , (LPSERVICE_MAIN_FUNCTIONA)PwnedServiceStart}, 
-											   {NULL             ,  NULL}
+							 {SERVICE_NAME     , (LPSERVICE_MAIN_FUNCTIONA)PwnedServiceStart}, 
+							 {NULL             ,  NULL}
 	                                       };
 	
 	if(!StartServiceCtrlDispatcherA(DispatchTable))
@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 
 	else
 		
-		return 0;
+		return EXIT_SUCCESS;
 	
 
 }
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 
 void PwnedServiceStart(DWORD argc, LPTSTR *argv)
 {
-
+                
 		PwnedServiceStatus.dwServiceType  = SERVICE_WIN32_OWN_PROCESS;
 		PwnedServiceStatus.dwCurrentState = SERVICE_START_PENDING;
 		PwnedServiceStatus.dwControlsAccepted = SERVICE_ACCEPT_STOP; 
@@ -57,14 +57,17 @@ void PwnedServiceStart(DWORD argc, LPTSTR *argv)
 void WINAPI PwnedServiceCtrlHandler(DWORD opcode){
 
 	switch(opcode){
-	
+	       
 		case SERVICE_CONTROL_STOP:
+			
+			 // clean-up ....
+			
 			PwnedServiceStatus.dwCurrentState = SERVICE_STOPPED;
 			PwnedServiceStatus.dwWaitHint = 0;
 			PwnedServiceStatus.dwCheckPoint = 0;
 			PwnedServiceStatus.dwWin32ExitCode = 0;
 			SetServiceStatus(PwnedServiceStatusHandle, &PwnedServiceStatus);
-		
+	           	
       
 			break;
 
@@ -75,5 +78,5 @@ void WINAPI PwnedServiceCtrlHandler(DWORD opcode){
 
 DWORD InvokePayload(){
 
-	// add your code here 
+	// add your payload here 
 }

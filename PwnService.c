@@ -48,7 +48,8 @@ void PwnedServiceStart(DWORD argc, LPTSTR *argv)
 	return;
 }
 
-void WINAPI PwnedServiceCtrlHandler(DWORD opcode){
+void WINAPI PwnedServiceCtrlHandler(DWORD opcode)
+{
 
 	switch(opcode){
 	       
@@ -73,7 +74,7 @@ void WINAPI PwnedServiceCtrlHandler(DWORD opcode){
 
 
 
-DWORD InvokePayload(void){
-
-	// add your payload here 
+DWORD InvokePayload(void)
+{
+        // add your payload here 
 }

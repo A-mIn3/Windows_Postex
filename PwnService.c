@@ -5,78 +5,75 @@
 
 void WINAPI PwnedServiceCtrlHandler(DWORD opcode);
 void PwnedServiceStart(DWORD argc, LPTSTR *argv);
-DWORD InvokePayload(); 
+DWORD InvokePayload(void); 
+
 
 SERVICE_STATUS PwnedServiceStatus;
 SERVICE_STATUS_HANDLE PwnedServiceStatusHandle;
 HANDLE Stop_Event;
 
+
 int main(int argc, char **argv)
 {
-	SERVICE_TABLE_ENTRYA DispatchTable[] = { 
-							 {SERVICE_NAME     , (LPSERVICE_MAIN_FUNCTIONA)PwnedServiceStart}, 
-							 {NULL             ,  NULL}
-	                                       };
-	
-	if(!StartServiceCtrlDispatcherA(DispatchTable))
-		
+        SERVICE_TABLE_ENTRYA DispatchTable[] = { 
+					         {SERVICE_NAME , (LPSERVICE_MAIN_FUNCTIONA)PwnedServiceStart}, 
+					         {NULL         ,  NULL}
+	                                      };
+     
+        if(!StartServiceCtrlDispatcherA(DispatchTable))
 		return EXIT_FAILURE;
-
-	else
-		
-		return EXIT_SUCCESS;
-	
-
+    
+        return EXIT_SUCCESS;
 }
 
 
 void PwnedServiceStart(DWORD argc, LPTSTR *argv)
 {
-                
-		PwnedServiceStatus.dwServiceType  = SERVICE_WIN32_OWN_PROCESS;
-		PwnedServiceStatus.dwCurrentState = SERVICE_START_PENDING;
-		PwnedServiceStatus.dwControlsAccepted = SERVICE_ACCEPT_STOP; 
-		PwnedServiceStatus.dwWin32ExitCode = 0;
-		PwnedServiceStatus.dwServiceSpecificExitCode = 0;
-		PwnedServiceStatus.dwCheckPoint = 0;
-		PwnedServiceStatus.dwWaitHint = 0;
+        PwnedServiceStatus.dwServiceType  = SERVICE_WIN32_OWN_PROCESS;
+	PwnedServiceStatus.dwCurrentState = SERVICE_START_PENDING;
+	PwnedServiceStatus.dwControlsAccepted = SERVICE_ACCEPT_STOP; 
+	PwnedServiceStatus.dwWin32ExitCode = 0;
+	PwnedServiceStatus.dwServiceSpecificExitCode = 0;
+	PwnedServiceStatus.dwCheckPoint = 0;
+	PwnedServiceStatus.dwWaitHint = 0;
 
-		PwnedServiceStatusHandle = RegisterServiceCtrlHandlerA(SERVICE_NAME, PwnedServiceCtrlHandler);
-
-		PwnedServiceStatus.dwCurrentState = SERVICE_RUNNING;
-		PwnedServiceStatus.dwCheckPoint = 0;
-		PwnedServiceStatus.dwWaitHint = 0;
-		SetServiceStatus(PwnedServiceStatusHandle, &PwnedServiceStatus);		
+	PwnedServiceStatusHandle = RegisterServiceCtrlHandlerA(SERVICE_NAME, PwnedServiceCtrlHandler);
+        PwnedServiceStatus.dwCurrentState = SERVICE_RUNNING;
+	PwnedServiceStatus.dwCheckPoint = 0;
+	PwnedServiceStatus.dwWaitHint = 0;
+	SetServiceStatus(PwnedServiceStatusHandle, &PwnedServiceStatus);		
 	
-		InvokePayload(); // might need to be invoked as a separate thread
+	InvokePayload(); // this might need to be invoked as a separate thread
 		
-		
-		return;
+	return;
 }
 
 void WINAPI PwnedServiceCtrlHandler(DWORD opcode){
 
 	switch(opcode){
 	       
-		case SERVICE_CONTROL_STOP:
+	     case SERVICE_CONTROL_STOP:
 			
-			 // clean-up ....
-			
-			PwnedServiceStatus.dwCurrentState = SERVICE_STOPPED;
-			PwnedServiceStatus.dwWaitHint = 0;
-			PwnedServiceStatus.dwCheckPoint = 0;
-			PwnedServiceStatus.dwWin32ExitCode = 0;
-			SetServiceStatus(PwnedServiceStatusHandle, &PwnedServiceStatus);
+		   // clean-up ....
+		PwnedServiceStatus.dwCurrentState = SERVICE_STOPPED;
+		PwnedServiceStatus.dwWaitHint = 0;
+		PwnedServiceStatus.dwCheckPoint = 0;
+		PwnedServiceStatus.dwWin32ExitCode = 0;
+		SetServiceStatus(PwnedServiceStatusHandle, &PwnedServiceStatus);
 	           	
-      
-			break;
+                break;
 
-	}
+		// more controls can be implemented here	
+       }
 
-	return ;
+       return;
 }
 
-DWORD InvokePayload(){
+
+
+
+
+DWORD InvokePayload(void){
 
 	// add your payload here 
 }

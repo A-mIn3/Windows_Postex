@@ -13,3 +13,5 @@ It might also be necessary to add some control event processing to the service h
   Automation of [winexe](https://sourceforge.net/projects/winexe/) for bruteforcing access to Windows RPC (IPC$ share).</br> 
  Please note that even if you have the correct admin credentials you might still not have access due to [UAC remote restrictions](https://support.microsoft.com/en-us/help/951016/description-of-user-account-control-and-remote-restrictions-in-windows).
  
+## Disclaimer
+Theses tools are made only for educational purposes and can be only used in legitimate penetration tests. Author does not take any responsibility for any actions taken by its users.
